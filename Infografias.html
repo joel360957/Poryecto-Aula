@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografías - Proyecto Aula</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('Fuentes/Minecraft.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }       
+        @font-face {
+            font-family: 'Collage';
+            src: url('Fuentes/College.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }       
+
+        /* Variables de entorno dinámicas basadas en tus páginas anteriores */
+        :root {
+            --fondo-pagina: #ffffff;
+            --color-texto: #111111;
+            --fondo-tarjeta: #f0f0f0;
+            --sombra: rgba(0, 0, 0, 0.08);
+            --sombra-hover: rgba(0, 0, 0, 0.15);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --fondo-pagina: #191b1c;
+                --color-texto: #ffffff;
+                --fondo-tarjeta: #25282a;
+                --sombra: rgba(0, 0, 0, 0.4);
+                --sombra-hover: rgba(0, 0, 0, 0.6);
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--fondo-pagina);
+            color: var(--color-texto);
+            padding-top: 100px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* NUEVO: Bloquea el scroll de la página principal cuando el modal está abierto */
+        body.modal-abierto {
+            overflow: hidden;
+        }
+
+        /* NAVBAR CON ESTILO GLASSMORPHISM (Se mantiene intacto) */
+        .navbar-glass {
+            position: fixed;        
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0 20px; 
+            box-sizing: border-box;
+            z-index: 100;           
+            background: #421021; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+            border-bottom: 1px solid #421021;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        .nav-logo {
+            font-family: 'Collage', sans-serif;
+            color: #ffffff;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            flex-shrink: 0; 
+            margin-right: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px; 
+            flex-shrink: 0; 
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            white-space: nowrap; 
+        }
+
+        .nav-links a:hover {
+            color: #000000;
+        }
+
+        .navbar-glass::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-links .btn-youtube {
+            font-size: 1.3rem; 
+            display: inline-flex;
+            align-items: center;
+            color: #ffffff; 
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav-links .btn-youtube:hover {
+            color: #ff0000; 
+            transform: scale(1.1); 
+        }
+
+        /* TÍTULO PRINCIPAL (Se mantiene intacto) */
+        h1 {
+            font-family: 'Collage', sans-serif;
+            font-size: 3rem;
+            color: var(--color-texto);
+            text-align: center;
+            margin: 20px 0;
+            transition: color 0.3s ease;
+        }
+
+        /* CUADRÍCULA MÁGICA CON SEPARACIÓN ADAPTABLE (Se mantiene intacto) */
+        .galeria-arte {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 40px; 
+            padding: 20px 40px 60px 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        /* TARJETAS: Modificadas a proporción vertical 9/16 para que la infografía no se aplaste */
+        .tarjeta-arte {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background: var(--fondo-tarjeta);
+            box-shadow: 0 10px 25px var(--sombra);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            aspect-ratio: 9 / 16; 
+        }
+
+        .tarjeta-arte:hover {
+            transform: translateY(-8px); 
+            box-shadow: 0 15px 30px var(--sombra-hover);
+        }
+
+        /* IMÁGENES DE TARJETAS: Ajustadas con 'contain' y sin filtros para máxima nitidez digital */
+        .tarjeta-arte img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            background-color: var(--fondo-tarjeta); 
+            transition: transform 0.5s ease;
+        }
+
+        .tarjeta-arte:hover img {
+            transform: scale(1.03); 
+        }
+
+        /* PIE DE FOTO EN CADA CUADRO (Se mantiene intacto) */
+        .info-titulo {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            color: #ffffff;
+            padding: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+            box-sizing: border-box;
+            backdrop-filter: blur(2px);
+        }
+
+        /* MODAL: Modificado sin scrollbars internos para permitir arrastre limpio */
+        .modal-fondo {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.94); 
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; 
+        }
+
+        .modal-contenido-img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* IMAGEN DEL MODAL: Configurada con cursor de manita (grab/grabbing) para interactividad */
+        .modal-contenido-img img {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 8px;
+            object-fit: contain;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.2s ease-out; 
+            cursor: grab; 
+            user-select: none; 
+            position: absolute; 
+        }
+
+        .modal-contenido-img img:active {
+            cursor: grabbing; 
+        }
+
+        /* BOTÓN DE CERRAR MODAL (Se mantiene intacto) */
+        .btn-cerrar-img {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #ffffff;
+            font-size: 45px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            z-index: 2100;
+        }
+
+        .btn-cerrar-img:hover {
+            color: #ff0000; 
+            transform: scale(1.1);
+        }
+
+        /* NUEVO: Estilos para los botones flotantes de Zoom estilo PDF */
+        .control-zoom {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 2200;
+        }
+
+        .control-zoom button {
+            background-color: rgba(30, 30, 30, 0.85);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .control-zoom button:hover {
+            background-color: #421021; 
+            transform: scale(1.08);
+        }
+                /* --- ESTILOS DE LA INTERFAZ DE AUTOR --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-cuadro-gris {
+            background-color: #2b2b2b;
+            width: 85%;
+            height: 85%;
+            max-width: 800px;
+            max-height: 700px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid #444444;
+            position: relative;
+            padding: 30px;
+            box-sizing: border-box;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .modal-overlay.mostrar {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-overlay.mostrar .modal-cuadro-gris {
+            transform: scale(1);
+        }
+
+        .modal-cerrar {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.2s;
+        }
+
+        .modal-cerrar:hover {
+            color: #ffb3c6;
+        }
+
+        .margen-superior-editable {
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .margen-superior-editable h2, .margen-inferior-editable h2 {
+            text-align: center;
+            font-family: 'Collage', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        .modal-cuerpo-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            padding-bottom: 20px;
+        }
+
+        .foto-creador-jpg {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #016394;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .bloque-nombre-autor {
+            margin: 0;
+            font-size: 1.6rem;
+            color: #6944fc;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .bloque-palabras-autor {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #dddddd;
+            max-width: 650px;
+            margin: 0;
+            text-align: justify;
+        }
+
+        .img-esquina {
+            position: absolute;
+            bottom: 0;
+            width: 110px;
+            height: auto;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .esquina-izq {
+            left: 0;
+            transform: rotate(330deg);
+        }
+
+        .esquina-der {
+            right: 0;
+            transform: scaleX(-1) rotate(330deg);
+        }
+
+        @media (max-width: 768px) {
+            .modal-cuadro-gris { width: 95%; height: 90%; }
+            .foto-creador-jpg { width: 130px; height: 130px; }
+            .bloque-palabras-autor { font-size: 1rem; }
+            .img-esquina { width: 70px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar-glass">
+        <div class="nav-logo">Proyecto Aula</div>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="Infografías.html">Infografias</a>
+            <a href="Videos.html">Videos</a>
+            <a href="Investigacion.html">Investigacion</a>
+            <a href="Gráfica.html">Graficas</a>
+              <img src="Imagenes/BarraNavegacion/E=mc2.png" alt="Autor" id="btn-autor" style="width: 32px; height: 32px; cursor: pointer; object-fit: cover; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <a href="https://www.youtube.com/@canaloficialdelcecyt8narci780/videos" target="_blank" class="btn-youtube">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+    </nav>
+
+    <h1>Infografías del Grupo</h1>
+
+    <div class="galeria-arte" id="galeriaInfografias"></div>
+
+    <div id="modalImagen" class="modal-fondo">
+        <span class="btn-cerrar-img">&times;</span>
+        
+        <div class="control-zoom">
+            <button id="btnZoomIn" title="Acercar"><i class="fa-solid fa-plus"></i></button>
+            <button id="btnZoomOut" title="Alejar"><i class="fa-solid fa-minus"></i></button>
+        </div>
+
+        <div class="modal-contenido-img">
+            <img id="imagenGrande" src="" alt="Vista ampliada">
+        </div>
+    </div>
+       <div id="modal-autor" class="modal-overlay">
+        <div class="modal-cuadro-gris">
+            <span class="modal-cerrar">&times;</span>
+            
+            <div class="margen-superior-editable">
+                <h2>-  . .- -- --- </h2>
+            </div>
+            
+            <div class="modal-cuerpo-vertical">
+                <img src="Imagenes/BarraNavegacion/trafalgaricon.jpg" alt="Creador" class="foto-creador-jpg">
+                
+                <div class="bloque-nombre-autor">
+                    Joel360957
+                </div>
+                
+                <p class="bloque-palabras-autor">
+                     Wanabana            
+                </p>
+            </div>
+
+            <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Izquierda" class="img-esquina esquina-izq">
+            <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Derecha" class="img-esquina esquina-der">
+             
+            <div class="margen-inferior-editable">      
+            <h2>-.-. .- -- .. .-.. .-</h2>            
+             </div>
+    <script>
+      const contenedorGaleria = document.getElementById('galeriaInfografias');
+const modalImg = document.getElementById('modalImagen');
+const imagenGrande = document.getElementById('imagenGrande');
+const btnCerrarImg = document.querySelector('.btn-cerrar-img');
+const btnZoomIn = document.getElementById('btnZoomIn');
+const btnZoomOut = document.getElementById('btnZoomOut');
+
+// 1. TU NUEVA LISTA DE TEMAS PERSONALIZADOS
+const titulosInfografias = [
+    "Infografía 1",
+    "Infografía 2",  
+    "Infografia 3",   
+    "Infografía 4", 
+    "Infografía 5",
+    "Infografía 6",
+    "Infografía 7",
+    "Infografía 8",
+    "Infografía 9",
+    "Infografía 10",
+    "Infografía 11",
+    "Infografía 12",
+    "Infografía 13",
+    "Infografía 14",
+    "Infografía 15",
+    "Infografía 16",
+    "Infografía 17",
+    "Infografía 18",
+    "Infografía 19",
+    "Infografía 20",
+    "Infografía 21",
+    "Infografía 22",
+    "Infografía 23",
+    "Infografía 24",
+    "Infografía 25",
+    "Infografía 26",
+    "Infografía 27",
+    "Infografía 28"
+];
+
+const totalInfografias = 28;
+let escalaActual = 1; 
+let estaArrastrando = false;
+let startX = 0, startY = 0;
+let translateX = 0, translateY = 0;
+
+// 2. EL BUCLE ACTUALIZADO QUE EMPOREJA CADA IMAGEN CON SU TÍTULO
+for (let i = 1; i <= totalInfografias; i++) {
+    const tarjeta = document.createElement('div');
+    tarjeta.classList.add('tarjeta-arte');
+    
+    const rutaImagen = `imagenes/infografias/infografia${i}.jpg`;
+    tarjeta.setAttribute('data-full', rutaImagen);
+
+    const tituloActual = titulosInfografias[i - 1];
+
+    tarjeta.innerHTML = `
+        <img src="${rutaImagen}" alt="${tituloActual}">
+        <div class="info-titulo">${tituloActual}</div>
+    `;
+
+    tarjeta.addEventListener('click', () => {
+        imagenGrande.src = rutaImagen;
+        modalImg.style.display = 'flex';
+        document.body.classList.add('modal-abierto');
+    });
+
+    contenedorGaleria.appendChild(tarjeta);
+}
+// Función unificada para aplicar escala y coordenadas de movimiento
+function actualizarTransformacion() {
+    imagenGrande.style.transform = `translate(${translateX}px, ${translateY}px) scale(${escalaActual})`;
+}
+
+// Lógica de Zoom
+btnZoomIn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (escalaActual < 3) {
+        escalaActual += 0.25;
+        actualizarTransformacion();
+    }
+});
+
+btnZoomOut.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (escalaActual > 0.5) {
+        escalaActual -= 0.25;
+        // Si el zoom regresa a la normalidad o menos, centramos la imagen automáticamente
+        if (escalaActual <= 1) {
+            translateX = 0;
+            translateY = 0;
+        }
+        actualizarTransformacion();
+    }
+});
+
+// --- LÓGICA DE INTERACCIÓN "DRAG TO PAN" (ARRASTRAR CON EL CURSOR) ---
+
+imagenGrande.addEventListener('mousedown', (e) => {
+    e.preventDefault(); // Evita que el navegador intente "arrastrar" el archivo de la imagen
+    if (escalaActual > 1) { // Solo permite arrastrar si tiene zoom aplicado
+        estaArrastrando = true;
+        // Calcula la distancia entre el clic original y la posición actual de la caja
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+    }
+});
+
+window.addEventListener('mousemove', (e) => {
+    if (!estaArrastrando) return;
+    // Calcula las nuevas coordenadas según mueves el mouse
+    translateX = e.clientX - startX;
+    translateY = e.clientY - startY;
+    
+    // Desactivamos temporalmente la transición para que el arrastre no tenga lag y sea instantáneo
+    imagenGrande.style.transition = 'none';
+    actualizarTransformacion();
+});
+
+window.addEventListener('mouseup', () => {
+    estaArrastrando = false;
+    // Devolvemos la transición suave para cuando vuelvan a usar los botones + y -
+    imagenGrande.style.transition = 'transform 0.2s ease-out';
+});
+
+// Función para cerrar y resetear todo a la normalidad
+function cerrarModalImg() {
+    modalImg.style.display = 'none';
+    imagenGrande.src = ''; 
+    document.body.classList.remove('modal-abierto'); // <-- DEVUELVE EL SCROLL A LA PÁGINA PRINCIPAL
+    
+    // Resetea valores físicos de la imagen
+    escalaActual = 1; 
+    translateX = 0;
+    translateY = 0;
+    actualizarTransformacion();
+}
+
+btnCerrarImg.addEventListener('click', cerrarModalImg);
+
+modalImg.addEventListener('click', (e) => {
+    // Solo cierra si dan clic en el fondo negro, no en la imagen ni controles
+    if (e.target === modalImg || e.target.classList.contains('modal-contenido-img')) {
+        cerrarModalImg();
+    }
+});
+const btnAutor = document.getElementById('btn-autor');
+        const modalAutor = document.getElementById('modal-autor');
+        const btnCerrar = document.querySelector('.modal-cerrar');
+
+        btnAutor.addEventListener('click', () => {
+            modalAutor.classList.add('mostrar');
+        });
+
+        btnCerrar.addEventListener('click', () => {
+            modalAutor.classList.remove('mostrar');
+        });
+
+        modalAutor.addEventListener('click', (e) => {
+            if (e.target === modalAutor) {
+                modalAutor.classList.remove('mostrar');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investigación - Proyecto Aula</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('Fuentes/Minecraft.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }       
+        @font-face {
+            font-family: 'Collage';
+            src: url('Fuentes/College.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }       
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            padding-top: 70px;
+        }
+
+        .navbar-glass {
+            position: fixed;        
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0 20px; 
+            box-sizing: border-box;
+            z-index: 100;          
+            background: #421021; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+            border-bottom: 1px solid #421021;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        .nav-logo {
+            font-family: 'Collage', sans-serif;
+            color: #ffffff;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            flex-shrink: 0; 
+            margin-right: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px; 
+            flex-shrink: 0; 
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            white-space: nowrap; 
+        }
+
+        .nav-links a:hover {
+            color: #000000;
+        }
+
+        .navbar-glass::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-links .btn-youtube {
+            font-size: 1.3rem; 
+            display: inline-flex;
+            align-items: center;
+            color: #ffffff; 
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav-links .btn-youtube:hover {
+            color: #ff0000; 
+            transform: scale(1.1); 
+        }
+
+        .header-investigacion {
+            padding: 60px 20px 40px 20px;
+            text-align: center;
+            background-color: #ffffff;
+        }
+
+        .header-investigacion h1 {
+            font-family: 'Collage', sans-serif;
+            font-size: 3.2rem;
+            color: #421021;
+            margin: 0 0 15px 0;
+        }
+
+        .header-investigacion p {
+            font-size: 1.3rem;
+            color: #555555;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+
+        .seccion-bloque {
+            padding: 80px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .contenido-ancho {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .fila-contenido {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .fila-invertida {
+            flex-direction: row-reverse;
+        }
+
+        .col-texto {
+            flex: 1.2;
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+
+        .col-texto h2 {
+            font-family: 'Collage', sans-serif;
+            font-size: 2.5rem;
+            margin-top: 0;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .col-texto h3 {
+            font-size: 1.5rem;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .col-texto p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .col-texto ul {
+            padding-left: 25px;
+            margin-bottom: 25px;
+        }
+
+        .col-texto li {
+            margin-bottom: 12px;
+        }
+
+        .col-imagen {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .imagen-wrapper {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .imagen-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .imagen-wrapper img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .bloque-blanco {
+            background-color: #ffffff;
+            color: #111111;
+        }
+        .bloque-blanco h2 { color: #421021; border-bottom: 2px solid rgba(66, 16, 33, 0.1); padding-bottom: 10px; }
+        .bloque-blanco h3 { color: #5B132B; }
+
+        .bloque-guinda {
+            background-color: #421021;
+            color: #ffffff;
+        }
+        .bloque-guinda h2 { color: #ffffff; border-bottom: 2px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
+        .bloque-guinda h3 { color: #ffb3c6; }
+        .bloque-guinda .imagen-wrapper { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); }
+
+        .bloque-blanco-dos {
+            background-color: #fafafa;
+            color: #111111;
+        }
+        .bloque-blanco-dos h2 { color: #421021; border-bottom: 2px solid rgba(66, 16, 33, 0.1); padding-bottom: 10px; }
+        .bloque-blanco-dos h3 { color: #5B132B; }
+
+        .bloque-guinda-dos {
+            background-color: #310b18;
+            color: #ffffff;
+        }
+        .bloque-guinda-dos h2 { color: #ffffff; border-bottom: 2px solid rgba(255, 255, 255, 0.1); padding-bottom: 10px; }
+        .bloque-guinda-dos h3 { color: #ffb3c6; }
+        .bloque-guinda-dos .imagen-wrapper { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+
+        .seccion-descarga {
+            padding: 80px 20px;
+            background-color: #ffffff;
+            text-align: center;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .contenedor-descarga {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(66, 16, 33, 0.03);
+            border: 1px solid rgba(66, 16, 33, 0.08);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contenedor-descarga h3 {
+            font-size: 1.6rem;
+            color: #421021;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .contenedor-descarga p {
+            font-size: 1.1rem;
+            color: #555555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn-personalizado-descarga {
+            text-decoration: none;
+            line-height: 1;
+            background-color: transparent;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            padding: 0.85em 1.5em;
+            padding-right: 1.6em;
+            color: #fff;
+            border: 1px solid transparent;
+            font-weight: 700;
+            border-radius: 2em;
+            font-size: 1.1rem;
+            box-shadow: 0 0.7em 1.5em -0.5em rgba(66, 16, 33, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            background: linear-gradient(
+                90deg,
+                rgba(66, 16, 33, 1) 0%,
+                rgba(107, 27, 54, 1) 100%
+            );
+        }
+
+        .button__icon {
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+        .btn-personalizado-descarga:hover {
+            border-color: #421021;
+            box-shadow: 0 0.7em 1.8em -0.3em rgba(66, 16, 33, 0.7);
+        }
+
+        .btn-personalizado-descarga:active {
+            transform: scale(0.96);
+            box-shadow: 0 0.5em 1.5em -0.5em rgba(66, 16, 33, 0.6);
+        }
+
+        /* --- VENTANA MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65); /* Opacidad solicitada */
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-cuadro-gris {
+            background-color: #2b2b2b; /* Cuadro gris */
+            width: 85%;
+            height: 85%;
+            max-width: 800px;
+            max-height: 700px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid #444444;
+            position: relative;
+            padding: 30px;
+            box-sizing: border-box;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .modal-overlay.mostrar {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-overlay.mostrar .modal-cuadro-gris {
+            transform: scale(1);
+        }
+
+        .modal-cerrar {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.2s;
+        }
+
+        .modal-cerrar:hover {
+            color: #ffb3c6;
+        }
+
+        /* Margen superior editable */
+        .margen-superior-editable {
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .margen-superior-editable h2 {
+            text-align: center;
+            font-family: 'Collage', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        .margen-inferior-editable h2 {
+            text-align: center;
+            font-family: 'Collage', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* Cuerpo en disposición vertical */
+        .modal-cuerpo-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra la imagen y los textos */
+            text-align: center;
+            gap: 20px;
+            padding-bottom: 20px; /* Espacio para que no tape los PNG inferiores */
+        }
+
+        /* Foto JPG arriba del texto */
+        .foto-creador-jpg {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #016394;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        /* Bloque de textos */
+        .bloque-nombre-autor {
+            margin: 0;
+            font-size: 1.6rem;
+            color: #6944fc;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .bloque-palabras-autor {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #dddddd;
+            max-width: 650px;
+            margin: 0;
+            text-align: justify; /* Justificado para verse más limpio */
+        }
+
+        /* PNGs en las esquinas inferiores fijas */
+        .img-esquina {
+            position: absolute;
+            bottom: 0;
+            width: 110px;
+            height: auto;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .esquina-izq {
+    left: 0;
+    /* Inclina la primera imagen 120 grados */
+    transform: rotate(330deg);
+}
+
+        .esquina-der {
+    right: 0;
+    /* scaleX(-1) la voltea horizontalmente (efecto espejo) */
+    /* rotate(45deg) le da la inclinación de 45 grados */
+    transform: scaleX(-1) rotate(330deg);
+}
+
+        @media (max-width: 768px) {
+            .fila-contenido, .fila-invertida {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .col-imagen {
+                width: 100%;
+            }
+            .imagen-wrapper {
+                max-width: 100%;
+            }
+            .seccion-bloque {
+                padding: 50px 20px;
+            }
+            .modal-cuadro-gris {
+                width: 95%;
+                height: 90%;
+            }
+            .foto-creador-jpg {
+                width: 130px;
+                height: 130px;
+            }
+            .bloque-palabras-autor {
+                font-size: 1rem;
+            }
+            .img-esquina {
+                width: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar-glass">
+        <div class="nav-logo">Proyecto Aula</div>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="Infografias.html">Infografias</a>
+            <a href="Videos.html">Videos</a>
+            <a href="Investigacion.html">Investigacion</a>
+            <a href="Grafica.html">Graficas</a>
+            
+            <img src="Imagenes/BarraNavegacion/E=mc2.png" alt="Autor" id="btn-autor" style="width: 32px; height: 32px; cursor: pointer; object-fit: cover; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+
+            <a href="https://www.youtube.com/@canaloficialdelcecyt8narci780/videos" target="_blank" class="btn-youtube">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+    </nav>
+
+    <header class="header-investigacion">
+        <h1>Reporte de Investigación Documental</h1>
+        <p>Análisis Profundo sobre los Riesgos, Retos y Oportunidades de las Inteligencias Artificiales en las Prácticas Educativas Modernas</p>
+    </header>
+
+    <section class="seccion-bloque bloque-blanco">
+        <div class="contenido-ancho">
+            <div class="fila-contenido">
+                <div class="col-texto">
+                    <h2>Contexto de las IA en el Sistema Educativo Mexicano</h2>
+                    <p>En el transcurso de los últimos años, la Inteligencia Artificial ha dejado de ser un conceptuado abstracto para transformarse en un pilar fundamental de la infraestructura digital global. En el entorno educativo mexicano, esta transición ha modificado drásticamente la forma en que las instituciones gestionan el conocimiento. Estudiantes, docentes y directivos interactúan diariamente con algoritmos avanzados para optimizar la organización del aprendizaje, resolver problemáticas complexes de manera inmediata y romper barreras tradicionales de acceso a la información.</p>
+                    
+                    <h3>Génesis y Evolución Conceptual</h3>
+                    <p>Las bases teóricas de la Inteligencia Artificial se remontan a 1950, cuando el matemático británico Alan Turing formuló la célebre interrogante sobre la capacidad de pensamiento de las máquinas, diseñando metodologías primigenias para evaluar la autonomía computacional. Hoy en día, un sistema se define formalmente como dotado de IA cuando posee la facultad intrínseca de resolver problemas abstractos de forma independiente y eficiente. Esta eficiencia técnica está directamente ligada a dos factores críticos: el nivel de autonomía operativa que posee el software y la complejidad algorítmica de la problemática que se pretende resolver.</p>
+                    
+                    <h3>Taxonomía y Modelos de Desarrollo Tecnológico</h3>
+                    <ul>
+                        <li><strong>Inteligencia Artificial Estrecha (ANI):</strong> Todo el ecosistema de software disponible actualmente (Gemini, ChatGPT, reconocimiento facial). Tareas únicas sin autoconciencia.</li>
+                        <li><strong>Inteligencia Artificial General (AGI):</strong> Software teórico con capacidades cognitivas idénticas a las humanas, capaz de aprender de forma transversal.</li>
+                        <li><strong>Superinteligencia Artificial (ASI):</strong> Hipótesis evolutiva que superaría exponencialmente al cerebro humano en creatividad, lógica y ciencia.</li>
+                    </ul>
+                </div>
+                <div class="col-imagen">
+                    <div class="imagen-wrapper">
+                        <img src="Imagenes/Investigacion/Alan.jpg" alt="Evolución de la Inteligencia Artificial">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion-bloque bloque-guinda">
+        <div class="contenido-ancho">
+            <div class="fila-contenido fila-invertida">
+                <div class="col-texto">
+                    <h2>Herramientas Pedagógicas y el Entorno Sociocultural</h2>
+                    <p>La adopción de las inteligencias artificiales en el nivel medio superior dentro del contexto urbano de México ha generado una profunda metamorfosis en las dinámicas socioculturales de los estudiantes. Las plataformas generativas se utilizan masivamente para estructurar resúmenes, depurar códigos de programación y automatizar tareas repetitivas. No obstante, la comunidad académica señala con preocupación que esta dependencia ciega y constante de un intermediario digital puede indicar un fenómeno de abstracción del entorno tangible. Este aislamiento tecnocéntrico debilita de forma paulatina las habilidades blandas indispensables, tales como el debate presencial, la negociación interpersonal y el pensamiento crítico colectivo.</p>
+                    
+                    <h3>Estructuras de Regulación y Salvaguarda Académica</h3>
+                    <ul>
+                        <li><strong>Cámara de Diputados e IPN:</strong> Diseño de leyes modernas enfocadas en la salvaguarda de datos personales y privacidad frente al rastreo masivo de corporaciones.</li>
+                        <li><strong>Lineamientos Institucionales de la UNAM:</strong> Prohibición estricta de listar a una IA como coautora de trabajos y obligación de declarar transparentemente su uso.</li>
+                    </ul>
+                    
+                    <h3>La Postura Global de la UNESCO</h3>
+                    <p>La UNESCO mantiene una postura firme: cualquier software emergente debe concebirse única y exclusivamente como un soporte auxiliar para la práctica docente. Bajo ninguna circunstancia la automatización reemplazará el criterio sensible del educador ni la obligación humana de rendir cuentas.</p>
+                </div>
+                <div class="col-imagen">
+                    <div class="imagen-wrapper">
+                        <img src="Imagenes/Investigacion/Uneso.jpg" alt="Impacto Sociocultural y Normas">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion-bloque bloque-blanco-dos">
+        <div class="contenido-ancho">
+            <div class="fila-contenido">
+                <div class="col-texto">
+                    <h2>Diagnóstico de Impacto, Riesgos y Realidad Digital en el CECyT 8</h2>
+                    
+                    <h3>Dilemas Éticos y la Amenaza de la Atrofia Cognitiva</h3>
+                    <p>El acceso inmediato e irrestricto a soluciones automatizadas genera un incentivo perverso para la pérdida de la integridad científica, promoviendo el plagio hormiga y la supresión de los procesos de lectura profunda. El riesgo fundamental radica en la atrofia o dependencia cognitiva, donde las herramientas digitales sustituyen por completo el esfuerzo analítico individual de los estudiantes en sus trayectorias escolares.</p>
+                    
+                    <h3>Brecha Digital e Infraestructura en el Plantel</h3>
+                    <p>A través de los análisis realizados en la comunidad estudiantil, se han detectado retos críticos que limitan un aprovechamiento equitativo de estas tecnologías:</p>
+                    <ul>
+                        <li><strong>Infraestructura y Conectividad:</strong> Limitaciones importantes en la estabilidad de las redes tanto en los entornos domésticos como en zonas escolares, afectando el acceso continuo a las plataformas de aprendizaje.</li>
+                        <li><strong>Barreras Socioeconómicas:</strong> La exclusión de las capacidades avanzadas de la IA debido al costo de las suscripciones premium de procesamiento de tokens.</li>
+                        <li><strong>Exigencia Pedagógica Real:</strong> La comunidad escolar manifiesta una clara preferencia por herramientas que actúen como tutores explicativos que desglosen conceptos paso a paso, en lugar de sistemas de resolución mecánica de tareas.</li>
+                    </ul>
+                </div>
+                <div class="col-imagen">
+                    <div class="imagen-wrapper">
+                        <img src="Imagenes/Investigacion/niñosIA.jpg" alt="Estadísticas de Diagnóstico CECyT 8">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion-bloque bloque-guinda-dos">
+        <div class="contenido-ancho">
+            <div class="fila-contenido fila-invertida">
+                <div class="col-texto">
+                    <h2>Propuestas de Intervención y Protocolos Educativos Politécnicos</h2>
+                    <p>Para garantizar el fiel cumplimiento del lema histórico que mandata que <strong>"La Técnica al Servicio de la Patria"</strong>, la adopción tecnológica no puede dejarse al azar. Se vuelve imperativo estructurar un marco estratégico de acción dentro de las aulas del CECyT 8:</p>
+                    
+                    <h3>El Método de Triangulación Académica Obligatoria</h3>
+                    <p>Se propone que la IA sea catalogada estrictamente como fuente de consulta dinámica. Con el **Método de Triangulación**, todo dato o resolución proporcionada por un software algorítmico debe ser obligatoriamente contrastada por el alumno empleando bibliografía física o digital certificada, y verificada contra los apuntes teóricos dictados por el docente en la cátedra.</p>
+                    
+                    <h3>Hacia un Consejo Politécnico de Inteligencia Artificial</h3>
+                    <p>La propuesta cumbre contempla la creación de un órgano especializado para edificar entornos virtuales de aprendizaje adaptativos mediante Big Data. Regulará el despliegue de asistentes virtuales oficiales programados para guiar el razonamiento lógico del alumno en materias complejas (física, matemáticas, programación), bloqueando cualquier intento de fraude o resolución mecánica directa.</p>
+                </div>
+                <div class="col-imagen">
+                    <div class="imagen-wrapper">
+                        <img src="Imagenes/Investigacion/Alumnosconsejo.jpg" alt="Propuestas Institucionales IPN">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seccion-descarga">
+        <div class="contenedor-descarga">
+            <h3>Si deseas ver a detalle nuestra investigación</h3>
+            <p>Si en verdad quieres ver a detalle nuestra investigación, puedes descargar nuestro reporte académico el cual incluye la metodología científica completa, antecedentes históricos exhaustivos, gráficas detalladas, análisis estadístico y la bibliografía oficial utilizada por el equipo del 2IM2.</p>
+            
+            <a href="Descarga/Investigacion.pdf" download class="btn-personalizado-descarga">
+                <svg
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    viewBox="0 0 24 24"
+                    class="button__icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path fill="none" d="M0 0h24v24H0z" stroke="none"></path>
+                    <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"></path>
+                    <path d="M7 11l5 5l5 -5"></path>
+                    <path d="M12 4l0 12"></path>
+                </svg>
+                <span class="button__text">Descargar Reporte</span>
+            </a>
+        </div>
+    </section>
+
+    <div id="modal-autor" class="modal-overlay">
+        <div class="modal-cuadro-gris">
+            <span class="modal-cerrar">&times;</span>
+            
+            <div class="margen-superior-editable">
+                <h2>-  . .- -- --- </h2>
+            </div>
+            
+            <div class="modal-cuerpo-vertical">
+                <img src="Imagenes/BarraNavegacion/trafalgaricon.jpg" alt="Creador" class="foto-creador-jpg">
+                
+                <div class="bloque-nombre-autor">
+                    Joel360957
+                </div>
+                
+                <p class="bloque-palabras-autor">
+                     Wanabana            
+                </p>
+            </div>
+
+            <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Izquierda" class="img-esquina esquina-izq">
+            <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Derecha" class="img-esquina esquina-der">
+             
+            <div class="margen-inferior-editable">      
+            <h2>-.-. .- -- .. .-.. .-</h2>            
+             </div>
+        </div>
+    </div>
+
+    <script>
+        const btnAutor = document.getElementById('btn-autor');
+        const modalAutor = document.getElementById('modal-autor');
+        const btnCerrar = document.querySelector('.modal-cerrar');
+        
+        btnAutor.addEventListener('click', () => {
+            modalAutor.classList.add('mostrar');
+        });
+
+        btnCerrar.addEventListener('click', () => {
+            modalAutor.classList.remove('mostrar');
+        });
+
+        modalAutor.addEventListener('click', (e) => {
+            if (e.target === modalAutor) {
+                modalAutor.classList.remove('mostrar');
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tutoriales</title>  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'Collage';
+            src: url('Fuentes/College.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }       
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff; 
+            color: #111111; 
+            padding-top: 100px; 
+            transition: background-color 0.3s ease, color 0.3s ease; 
+        }
+
+        h3 {
+            margin: 20px 0 10px 40px; 
+            font-size: 1.5rem;
+            font-family: 'Collage', sans-serif; 
+            color: #111111; 
+            transition: color 0.3s ease;
+        }
+
+        .navbar-glass {
+            position: fixed;        
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0 20px; 
+            box-sizing: border-box;
+            z-index: 100;          
+            background: #421021; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+            border-bottom: 1px solid #421021;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        .nav-logo {
+            font-family: 'Collage', sans-serif;
+            color: #ffffff;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            flex-shrink: 0; 
+            margin-right: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px; 
+            flex-shrink: 0; 
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            white-space: nowrap; 
+        }
+
+        .nav-links a:hover {
+            color: #000000;
+        }
+
+        .navbar-glass::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .nav-links .btn-youtube {
+            font-size: 1.3rem; 
+            display: inline-flex;
+            align-items: center;
+            color: #ffffff; 
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav-links .btn-youtube:hover {
+            color: #ff0000; 
+            transform: scale(1.1); 
+        }
+
+        .galeria-videos {
+            display: flex;
+            flex-wrap: nowrap;      
+            gap: 30px;
+            justify-content: safe center; 
+            padding: 10px 40px 30px 40px;
+            max-width: 100%;         
+            margin: 0 auto;
+            box-sizing: border-box;
+            overflow-x: auto;        
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .galeria-videos::-webkit-scrollbar {
+            height: 8px;
+        }
+        .galeria-videos::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .tarjeta-video {
+            position: relative;
+            width: 280px !important;  
+            height: 280px !important; 
+            min-width: 280px;         
+            min-height: 280px;        
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex-shrink: 0;          
+        }
+
+        .tarjeta-video img {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+            object-fit: cover !important; 
+            transition: transform 0.3s ease;
+        }
+
+        .capa-descripcion {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75); 
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            opacity: 0; 
+            transition: opacity 0.3s ease;
+            pointer-events: none; 
+        }
+
+        .capa-descripcion h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            font-family: 'Collage', sans-serif; 
+            color: #ffffff; 
+        }
+
+        .capa-descripcion p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .tarjeta-video:hover .capa-descripcion {
+            opacity: 1; 
+        }
+
+        .tarjeta-video:hover img {
+            transform: scale(1.05); 
+        }
+
+        .modal-fondo {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); 
+            z-index: 2000; 
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-contenido {
+            position: relative;
+            width: 85%; 
+            max-width: 900px;
+            aspect-ratio: 16 / 9; 
+        }
+
+        .modal-contenido iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .btn-cerrar {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #ffffff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .btn-cerrar:hover {
+            color: #ff0000; 
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #191b1c; 
+                color: #ffffff;
+            }
+
+            h3 {
+                color: #ffffff;
+            }
+
+            .tarjeta-video {
+                box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            }
+
+            .galeria-videos::-webkit-scrollbar-thumb {
+                background: #333638;
+            }
+        }
+          /* --- ESTILOS DE LA INTERFAZ DE AUTOR --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-cuadro-gris {
+            background-color: #2b2b2b;
+            width: 85%;
+            height: 85%;
+            max-width: 800px;
+            max-height: 700px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid #444444;
+            position: relative;
+            padding: 30px;
+            box-sizing: border-box;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .modal-overlay.mostrar {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-overlay.mostrar .modal-cuadro-gris {
+            transform: scale(1);
+        }
+
+        .modal-cerrar {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.2s;
+        }
+
+        .modal-cerrar:hover {
+            color: #ffb3c6;
+        }
+
+        .margen-superior-editable {
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .margen-superior-editable h2, .margen-inferior-editable h2 {
+            text-align: center;
+            font-family: 'Collage', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        .modal-cuerpo-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            padding-bottom: 20px;
+        }
+
+        .foto-creador-jpg {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #016394;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .bloque-nombre-autor {
+            margin: 0;
+            font-size: 1.6rem;
+            color: #6944fc;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .bloque-palabras-autor {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #dddddd;
+            max-width: 650px;
+            margin: 0;
+            text-align: justify;
+        }
+
+        .img-esquina {
+            position: absolute;
+            bottom: 0;
+            width: 110px;
+            height: auto;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .esquina-izq {
+            left: 0;
+            transform: rotate(330deg);
+        }
+
+        .esquina-der {
+            right: 0;
+            transform: scaleX(-1) rotate(330deg);
+        }
+
+        @media (max-width: 768px) {
+            .modal-cuadro-gris { width: 95%; height: 90%; }
+            .foto-creador-jpg { width: 130px; height: 130px; }
+            .bloque-palabras-autor { font-size: 1rem; }
+            .img-esquina { width: 70px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar-glass">
+        <div class="nav-logo">Proyecto Aula</div>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="Infografias.html">Infografias</a>
+            <a href="Videos.html">Videos</a>
+            <a href="Investigacion.html">Investigacion</a>
+            <a href="Grafica.html">Graficas</a>
+ <img src="Imagenes/BarraNavegacion/E=mc2.png" alt="Autor" id="btn-autor" style="width: 32px; height: 32px; cursor: pointer; object-fit: cover; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <a href="https://www.youtube.com/@canaloficialdelcecyt8narci780/videos" target="_blank" class="btn-youtube">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+    </nav>
+
+    <h3>Expresión Oral</h3>
+    <div class="galeria-videos">
+        <div class="tarjeta-video" data-video="k1VaUu2xJss">
+            <img src="imagenes/Videos/persona.jpg" alt="Video 2">
+            <div class="capa-descripcion">
+                <h3>Uso Ético de la Inteligencia Artificial</h3>
+                <p>Aquí veremos y analizaremos cómo usar la IA de forma responsable usándola con ética</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>Comunicación y Liderazgo</h3>
+    <div class="galeria-videos">
+        <div class="tarjeta-video" data-video="PqesSl-ygOk">
+            <img src="imagenes/Videos/comunidad1.jpg" alt="Video 3">
+            <div class="capa-descripcion">
+                <h3>Tutorial uso responsable de la IA en Comunicación y Liderazgo</h3>
+                <p>En este video nos enseñarán y nos darán consejos para usar la IA como un recurso de apoyo con el cual podemos desarrollarnos mejor con ejemplos dinámicos</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>Computación</h3>
+    <div class="galeria-videos">
+        <div class="tarjeta-video" data-video="UOsFMXpJ4Mc">
+            <img src="imagenes/Videos/compu.jpg" alt="Video 5">
+            <div class="capa-descripcion">
+                <h3>Tutorial del uso de IA en Computación</h3>
+                <p>En este video veremos cómo crear un prompt y ejemplos en tiempo real de cómo modificarlo a mano tú mismo</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>Geometría y Trigonometría</h3>
+    <div class="galeria-videos">
+        <div class="tarjeta-video" data-video="H5_OMutMjj4">
+            <img src="imagenes/Videos/tri.jpg" alt="Video 6">
+            <div class="capa-descripcion">
+                <h3>Tutorial para usar "Photomath"</h3>
+                <p>En este video nos enseñarán cómo usar y configurar Photomath para resolver y estudiar ecuaciones con las múltiples funciones de esta app</p>
+            </div>
+        </div>
+        <div class="tarjeta-video" data-video="QZTjxKLPzs0">
+            <img src="imagenes/Videos/figura.jpg" alt="Video 7">
+            <div class="capa-descripcion">
+                <h3>No sé qué tiene que ver con Trigonometría</h3>
+                <p>...d</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>Inglés</h3>
+    <div class="galeria-videos">
+        <div class="tarjeta-video" data-video="mLUVCp7kCUc">
+            <img src="imagenes/Videos/ingles.jpg" alt="Video 8">
+            <div class="capa-descripcion">
+                <h3>Cómo integrar la IA en tu materia de inglés</h3>
+                <p>En este video nos enseñan cómo podemos usar la IA para hacer casos prácticos de conversaciones las cuales se van a adaptar según nuestro nivel de inglés gracias a la configuración que le hagamos a la IA</p>
+            </div>
+        </div>
+        <div class="tarjeta-video" data-video="N6UUNvv--js">
+            <img src="imagenes/Videos/duo.jpg" alt="Video 9">
+            <div class="capa-descripcion">
+                <h3>Cómo hacer que la IA no te dé siempre la razón</h3>
+                <p>En este video nuestros compañeros nos enseñarán a cómo configurar la IA para hacer que esta no siempre nos dé la razón a todo</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>Biología</h3>
+    <div class="galeria-videos">
+        <div class="tarjeta-video" data-video="2PWhQMRQcbg">
+            <img src="imagenes/Videos/biologia.jpg" alt="Video 10">
+            <div class="capa-descripcion">
+                <h3>Tutorial de Biología</h3>
+                <p>En este video nos van a recomendar cómo usar la IA para biología, como para obtener imágenes 3D, etc.</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>Filosofía</h3>
+    <div class="galeria-videos">
+        <div class="tarjeta-video" data-video="ITevHxQSPLw">
+            <img src="imagenes/Videos/queserias2.png" alt="Video 11">
+            <div class="capa-descripcion">
+                <h3>Tutorial Perplexity Filosofía</h3>
+                <p>En este video nos enseñarán la IA de Perplexity con la cual nos darán varios ejemplos relacionados a nuestros trabajos de Filosofía</p>
+            </div>
+        </div>
+    </div>
+
+    <h3>Orientación Juvenil y Profesional</h3>
+    <div class="galeria-videos">
+        <div class="tarjeta-video" data-video="YS2cSS7yaqU">
+            <img src="imagenes/Videos/dos.jpg" alt="Video 13">
+            <div class="capa-descripcion">
+                <h3>Cómo usar IA para la materia de Orientación Juvenil</h3>
+                <p>En este video nos explican cómo usar una IA en específico para tener en cuenta tus errores y tus áreas de mejora</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalVideo" class="modal-fondo">
+        <span class="btn-cerrar">&times;</span>
+        <div class="modal-contenido">
+            <iframe id="iframeYoutube" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <H1>Uso Etico</H1>
+    <  <div class="tarjeta-video" data-video="QZTjxKLPzs0">
+            <img src="imagenes/Videos/figura.jpg" alt="Video 7">
+            <div class="capa-descripcion">
+                <h3>No sé qué tiene que ver con Trigonometría</h3>
+                <p>...d</p>
+            </div>
+        </div>
+    </div>
+
+     <div id="modal-autor" class="modal-overlay">
+        <div class="modal-cuadro-gris">
+            <span class="modal-cerrar">&times;</span>
+            
+            <div class="margen-superior-editable">
+                <h2>-  . .- -- --- </h2>
+            </div>
+            
+            <div class="modal-cuerpo-vertical">
+                <img src="Imagenes/BarraNavegacion/trafalgaricon.jpg" alt="Creador" class="foto-creador-jpg">
+                
+                <div class="bloque-nombre-autor">
+                    Joel360957
+                </div>
+                
+                <p class="bloque-palabras-autor">
+                     Wanabana            
+                </p>
+            </div>
+
+            <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Izquierda" class="img-esquina esquina-izq">
+            <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Derecha" class="img-esquina esquina-der">
+             
+            <div class="margen-inferior-editable">      
+            <h2>-.-. .- -- .. .-.. .-</h2>            
+             </div>
+    <script>
+    const modal = document.getElementById('modalVideo');
+    const iframe = document.getElementById('iframeYoutube');
+    const btnCerrar = document.querySelector('.btn-cerrar');
+    const tarjetas = document.querySelectorAll('.tarjeta-video');
+
+    tarjetas.forEach(tarjeta => {
+        tarjeta.addEventListener('click', () => {
+            const videoId = tarjeta.getAttribute('data-video');
+            
+            let origenActual = window.location.origin;
+            if (origenActual === 'null' || origenActual.startsWith('file')) {
+                origenActual = 'https://www.youtube.com'; 
+            }
+
+            iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&origin=${encodeURIComponent(origenActual)}&widget_referrer=${encodeURIComponent(window.location.href)}`;
+            
+            iframe.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture");
+            iframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+            
+            modal.style.display = 'flex'; 
+        });
+    });
+
+    function cerrarModal() {
+        modal.style.display = 'none';
+        iframe.removeAttribute('src'); 
+    }
+
+    btnCerrar.addEventListener('click', cerrarModal);
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            cerrarModal();
+        }
+    });
+     const btnAutor = document.getElementById('btn-autor');
+        const modalAutor = document.getElementById('modal-autor');
+        const btnCerrar2 = document.querySelector('.modal-cerrar');
+
+        btnAutor.addEventListener('click', () => {
+            modalAutor.classList.add('mostrar');
+        });
+
+        btnCerrar2.addEventListener('click', () => {
+            modalAutor.classList.remove('mostrar');
+        });
+
+        modalAutor.addEventListener('click', (e) => {
+            if (e.target === modalAutor) {
+                modalAutor.classList.remove('mostrar');
+            }
+        });
+    </script>
+</body>
+</html>

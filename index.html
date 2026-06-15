@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Aula - Inicio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('Fuentes/Minecraft.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }       
+        @font-face {
+            font-family: 'Collage';
+            src: url('Fuentes/College.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }       
+
+        html {
+            scroll-behavior: smooth; 
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #5B132B; 
+        }
+
+        .navbar-glass {
+            position: fixed;        
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            padding: 0 20px; 
+            box-sizing: border-box;
+            z-index: 100;           
+            background:#421021; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+            border-bottom: 1px solid #421021;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        .nav-logo {
+            font-family: 'Collage', sans-serif;
+            color: #ffffff;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            flex-shrink: 0; 
+            margin-right: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px; 
+            flex-shrink: 0; 
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            white-space: nowrap; 
+        }
+
+        .nav-links a:hover {
+            color: #000000;
+        }
+
+        .navbar-glass::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .nav-links .btn-youtube {
+            font-size: 1.3rem; 
+            display: inline-flex;
+            align-items: center;
+            color: #ffffff; 
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav-links .btn-youtube:hover {
+            color: #ff0000; 
+            transform: scale(1.1); 
+        }
+
+        .seccion-gato {
+            height: 100vh; 
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffffff; 
+            position: relative;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+
+        .hero-contenedor {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 50px; 
+        }
+
+        .tarjeta-vidrio {
+            max-width: 550px;
+            color: #111111; 
+            box-sizing: border-box;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        h1 {
+            font-family: 'Collage', sans-serif;
+            font-size: 3rem;
+            color: #5B132B; 
+            text-align: left;
+            margin: 0 0 15px 0;
+        }
+
+        .subtitulo-hero {
+            font-size: 1.2rem;
+            color: #444444; 
+            margin: 0;
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        .hero-ilustracion {
+            max-width: 450px;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
+            object-fit: cover;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hero-contenedor {
+                flex-direction: column;
+                text-align: center;
+            }
+            .tarjeta-vidrio {
+                align-items: center;
+                text-align: center;
+            }
+            h1, .subtitulo-hero {
+                text-align: center;
+            }
+            .hero-ilustracion {
+                max-width: 300px;
+            }
+        }
+
+        .seccion-degradado {
+            min-height: 100vh; 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px;
+            box-sizing: border-box;
+            background: #5B132B; 
+        }
+
+        .contenido-abajo {
+            color: #ffffff; 
+            text-align: center;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .contenido-abajo h2 {
+            font-family: 'Collage', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffffff; 
+        }
+
+        .contenido-abajo .introduccion-texto {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #e0e0e0; 
+            max-width: 700px;
+            margin: 0 auto 50px auto;
+        }
+
+        .contenedor-tarjetas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .tarjeta-enlace {
+            background: #4a0e22; 
+            border: 1px solid #6e1834;
+            border-radius: 12px;
+            padding: 30px 20px;
+            width: 280px;
+            box-sizing: border-box;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tarjeta-enlace:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: #ffffff; 
+        }
+
+        .tarjeta-enlace i {
+            font-size: 2.5rem;
+            color: #ffffff; 
+            margin-bottom: 15px;
+        }
+
+        .tarjeta-enlace h3 {
+            font-family: 'Collage', sans-serif;
+            font-size: 1.2rem;
+            margin: 0 0 10px 0;
+            color: #ffffff;
+        }
+
+        .tarjeta-enlace p {
+            font-size: 0.95rem;
+            color: #cccccc; 
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .btn-comenzar {
+            color: #5B132B; 
+            padding: 0.7em 0.7em;
+            font-size: 18px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            border-radius: 0.5em;
+            background: #ffffff; 
+            cursor: pointer;
+            border: 1px solid #ffffff;
+            transition: all 0.3s;
+            text-decoration: none;
+            position: absolute;
+            bottom: 15px; 
+            left: 50%;
+            transform: translateX(-50%); 
+            box-shadow: 6px 6px 12px #d9d9d9, -6px -6px 12px #ffffff;
+        }
+
+        .btn-comenzar:hover {
+            background: #f5f5f5;
+            border-color: #f5f5f5;
+        }
+
+        .btn-comenzar:active {
+            color: #6e1834;
+            transform: translateX(-50%) scale(0.98);
+            box-shadow: inset 4px 4px 8px #d9d9d9, inset -4px -4px 8px #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .seccion-gato {
+                background: #191b1c; 
+            }
+
+            h1 {
+                color: #ffffff; 
+            }
+
+            .subtitulo-hero {
+                color: #e0e0e0; 
+            }
+
+            .btn-comenzar {
+                background: #191b1c;
+                border-color: #191b1c;
+                color: #ffffff; 
+                box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.6), -6px -6px 12px rgba(255, 255, 255, 0.04);
+            }
+            
+            .btn-comenzar:hover {
+                background: #222526; 
+                border-color: #222526;
+            }
+
+            .btn-comenzar:active {
+                color: #cccccc;
+                box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.7), inset -4px -4px 8px rgba(255, 255, 255, 0.04);
+            }
+        }
+         /* --- ESTILOS DE LA INTERFAZ DE AUTOR --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-cuadro-gris {
+            background-color: #2b2b2b;
+            width: 85%;
+            height: 85%;
+            max-width: 800px;
+            max-height: 700px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid #444444;
+            position: relative;
+            padding: 30px;
+            box-sizing: border-box;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .modal-overlay.mostrar {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-overlay.mostrar .modal-cuadro-gris {
+            transform: scale(1);
+        }
+
+        .modal-cerrar {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.2s;
+        }
+
+        .modal-cerrar:hover {
+            color: #ffb3c6;
+        }
+
+        .margen-superior-editable {
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .margen-superior-editable h2, .margen-inferior-editable h2 {
+            text-align: center;
+            font-family: 'Collage', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        .modal-cuerpo-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            padding-bottom: 20px;
+        }
+
+        .foto-creador-jpg {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #016394;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .bloque-nombre-autor {
+            margin: 0;
+            font-size: 1.6rem;
+            color: #6944fc;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .bloque-palabras-autor {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #dddddd;
+            max-width: 650px;
+            margin: 0;
+            text-align: justify;
+        }
+
+        .img-esquina {
+            position: absolute;
+            bottom: 0;
+            width: 110px;
+            height: auto;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .esquina-izq {
+            left: 0;
+            transform: rotate(330deg);
+        }
+
+        .esquina-der {
+            right: 0;
+            transform: scaleX(-1) rotate(330deg);
+        }
+
+        @media (max-width: 768px) {
+            .modal-cuadro-gris { width: 95%; height: 90%; }
+            .foto-creador-jpg { width: 130px; height: 130px; }
+            .bloque-palabras-autor { font-size: 1rem; }
+            .img-esquina { width: 70px; }
+        }
+    </style>
+</head>
+<body>
+
+
+    <nav class="navbar-glass">
+        <div class="nav-logo">Proyecto Aula</div>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="Infografias.html">Infografias</a>
+            <a href="Videos.html">Videos</a>
+            <a href="Investigacion.html">Investigacion</a>
+            <a href="Grafica.html">Graficas</a>
+             <img src="Imagenes/BarraNavegacion/E=mc2.png" alt="Autor" id="btn-autor" style="width: 32px; height: 32px; cursor: pointer; object-fit: cover; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <a href="https://www.youtube.com/@canaloficialdelcecyt8narci780/videos" target="_blank" class="btn-youtube">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+    </nav>
+
+
+
+    <section id="inicio" class="seccion-gato">
+        <div class="hero-contenedor">
+            <div class="tarjeta-vidrio">
+                <h1>Proyecto Aula</h1>
+                <p class="subtitulo-hero">Riesgos, Retos y Oportunidades de las Inteligencias Artificiales en la Educación 
+                    (no se que mas poner)
+                </p>
+            </div>
+            <img src="imagenes/Index/IAPAG1.webp" alt="Imagen de Proyecto Aula" class="hero-ilustracion">
+        </div>
+        <a href="#contenedor-tarjetas" class="btn-comenzar">Empezar a explorar</a>
+    </section>
+
+
+
+    <section id="pilares1" class="seccion-degradado">
+        <div class="contenido-abajo">
+            <h2>¿De quE trata nuestro proyecto?</h2>
+            <p style="color: #e0e0e0;">La Inteligencia Artificial está transformando de manera acelerada los procesos académicos, entornos y procesos cognitivos en el nivel medio superior. Como estudiantes del CECyT 8 "Narciso Bassols", nos hemos dado a la tarea de investigar el impacto real de estas tecnologías en nuestra querida comunidad Politecnica. A través de este portal, analizamos desde sus antecedentes históricos y dilemas éticos bajo la perspectiva de la UNESCO, hasta datos estadísticos recolectados dentro de nuestro plantel, con el objetivo de proponer un uso responsable y crítico de las herramientas digitales mas actuales.</p>
+            <img src="imagenes/Index/IAPAG1.webp" alt="Imagen de IA" style="width: 100%; max-width: 400px; margin-top: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+        </div>
+    </section>
+
+
+
+    <hr style="width: 90%; border: 1px solid #6e1834; margin: 50px auto;">
+
+
+
+    <section id="pilares2" class="seccion-degradado">
+        <div class="contenido-abajo">
+            <h2>Explora nuestro Proyecto</h2>
+            <p class="introduccion-texto">
+                Bienvenido al nuestra pagina web sobre nuestra investigación. A continuación, puedes acceder directamente a los módulos clave donde desglosamos la información recolectada por el equipo.
+            </p>
+
+            <div id="contenedor-tarjetas" class="contenedor-tarjetas">
+                <a href="Investigacion.html" class="tarjeta-enlace">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>Investigación</h3>
+                    <p>Revisa el marco teórico detallado, antecedentes históricos y las conclusiones escritas de nuestro trabajo.</p>
+                </a>
+
+                <a href="Grafica.html" class="tarjeta-enlace">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <h3>Gráficas</h3>
+                    <p>Explora las estadísticas reales obtenidas a través de las encuestas aplicadas a la comunidad estudiantil.</p>
+                </a>
+
+                <a href="Videos.html" class="tarjeta-enlace">
+                    <i class="fa-solid fa-video"></i>
+                    <h3>Videos</h3>
+                    <p>Mira las exposiciones audiovisuales y los videotutoriales preparados para complementar cada materia.</p>
+                </a>
+            </div>
+        </div>
+       <div id="modal-autor" class="modal-overlay">
+        <div class="modal-cuadro-gris">
+            <span class="modal-cerrar">&times;</span>
+            
+            <div class="margen-superior-editable">
+                <h2>-  . .- -- --- </h2>
+            </div>
+            
+            <div class="modal-cuerpo-vertical">
+                <img src="Imagenes/BarraNavegacion/trafalgaricon.jpg" alt="Creador" class="foto-creador-jpg">
+                
+                <div class="bloque-nombre-autor">
+                    Joel360957
+                </div>
+                
+                <p class="bloque-palabras-autor">
+                     Wanabana            
+                </p>
+            </div>
+
+            <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Izquierda" class="img-esquina esquina-izq">
+            <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Derecha" class="img-esquina esquina-der">
+             
+            <div class="margen-inferior-editable">      
+            <h2>-.-. .- -- .. .-.. .-</h2>            
+             </div>
+        </div>
+    </section>
+
+<script>
+     const btnAutor = document.getElementById('btn-autor');
+        const modalAutor = document.getElementById('modal-autor');
+        const btnCerrar = document.querySelector('.modal-cerrar');
+
+        btnAutor.addEventListener('click', () => {
+            modalAutor.classList.add('mostrar');
+        });
+
+        btnCerrar.addEventListener('click', () => {
+            modalAutor.classList.remove('mostrar');
+        });
+
+        modalAutor.addEventListener('click', (e) => {
+            if (e.target === modalAutor) {
+                modalAutor.classList.remove('mostrar');
+            }
+        });
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño por Secciones 🐱🎨</title>
+    <style>
+        /* 1. Limpieza básica de la página */
+        html, body {
+            margin: 0;#fffff
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            /* El body ya no lleva fondo, ahora es un contenedor invisible */
+        }
+
+        /* 2. SECCIÓN 1: El gato espacial (Ocupa exactamente la primera pantalla) */
+        .seccion-gato {
+            height: 100vh; /* Mide el 100% de la pantalla inicial */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            /* El gato se queda exclusivo en esta sección */
+            background: url('gato.jpg') no-repeat center center;
+            background-size: cover;
+        }
+
+        /* Tu tarjeta de vidrio (Se queda idéntica, flotando en la sección del gato) */
+        .tarjeta-vidrio {
+            width: 450px;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* 3. SECCIÓN 2: Tu degradado personalizado (Aparece al bajar) */
+        .seccion-degradado {
+            min-height: 100vh; /* Como mínimo mide una pantalla completa, pero puede crecer si metes mucho texto */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            box-sizing: border-box;
+
+            /* TUS GRADIENTES EXACTOS */
+            background: #BBD2C5;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #536976, #BBD2C5);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        /* Estilos para el contenido dentro de la sección del degradado */
+        .contenido-abajo {
+            color: #2c3e50; /* Un color oscuro que contrasta hermoso con tu degradado claro */
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .contenido-abajo h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .contenido-abajo p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="seccion-gato">
+        <div class="tarjeta-vidrio">
+            <h1>Misión Espacial</h1>
+            <p>Esta tarjeta está sobre el fondo del gato. El espacio exterior termina aquí.</p>
+        </div>
+    </section>
+
+    <section class="seccion-degradado">
+        <div class="contenido-abajo">
+            <h2>Nueva Sección</h2>
+            <p>¡Y listo! Al deslizar hacia abajo, el gato se queda arriba y entras a este espacio limpio con el degradado metálico que elegiste. Aquí puedes poner más información de tu proyecto sin que interfiera con el diseño de arriba.</p>
+        </div>
+    </section>
+
+</body>
+</html>

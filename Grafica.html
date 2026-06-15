@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficas Proyecto Aula</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* 1. TIPOGRAFÍA */
+        @font-face {
+            font-family: 'Collage';
+            src: url('Fuentes/College.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }       
+
+        /* ESTILOS GLOBALES BASE (MODO CLARO) */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagina-contenedor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding-top: 120px; 
+            padding-bottom: 50px;
+            box-sizing: border-box;
+        }
+
+        /* BARRA DE NAVEGACIÓN (INMUTABLE - IGUAL A TU INDEX) */
+        .navbar-glass {
+            position: fixed;        
+            top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px; box-sizing: border-box; z-index: 100;          
+            background: #421021; /* Tu guinda fijo */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+            border-bottom: 1px solid #421021;
+            overflow-x: auto; overflow-y: hidden; white-space: nowrap; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        .nav-logo {
+            font-family: 'Collage', sans-serif;
+            color: #ffffff; font-size: 1.1rem; letter-spacing: 1px;
+            flex-shrink: 0; margin-right: 20px;
+        }
+
+        .nav-links { display: flex; gap: 25px; flex-shrink: 0; align-items: center; }
+        
+        .nav-links a { color: #ffffff; text-decoration: none; font-size: 1rem; font-weight: 600; transition: color 0.3s ease; }
+        .nav-links a:hover { color: #000000; }
+        
+        .navbar-glass::-webkit-scrollbar { display: none; }
+
+        .nav-links .btn-youtube {
+            font-size: 1.3rem; 
+            display: inline-flex;
+            align-items: center;
+            color: #ffffff; 
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .nav-links .btn-youtube:hover {
+            color: #ff0000; 
+            transform: scale(1.1); 
+        }
+
+        /* TÍTULO PRINCIPAL */
+        h2 {
+            font-family: 'Collage', sans-serif;
+            color: #111111; text-align: center; margin: 0 0 30px 0; font-size: 2.5rem;
+            transition: color 0.3s ease;
+        }
+
+        /* CONTENEDOR DE LAS GRÁFICAS - CENTRADO Y AMPLIO */
+        .contenedor-grafica {
+            width: 90%;
+            max-width: 650px;       /* Tamaño ideal expandido */
+            height: auto;
+            aspect-ratio: 1 / 1;    /* Proporción simétrica perfecta para pasteles */
+            background:#421021;
+            padding: 30px;          /* Más respiro para las leyendas */
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 50px; 
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Responsividad simple para pantallas chicas */
+        @media (max-width: 450px) {
+            .contenedor-grafica {
+                width: 95%;
+                padding: 15px;
+            }
+        }
+
+        /* MODO OSCURO AUTOMÁTICO */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #191b1c; 
+            }
+
+            h2 {
+                color: #ffffff; 
+            }
+
+            .contenedor-grafica {
+                background: #222526; 
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            }
+        }
+        
+        /* INTERFAZ DE AUTOR */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-cuadro-gris {
+            background-color: #2b2b2b;
+            width: 85%;
+            height: 85%;
+            max-width: 800px;
+            max-height: 700px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border: 2px solid #444444;
+            position: relative;
+            padding: 30px;
+            box-sizing: border-box;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .modal-overlay.mostrar {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-overlay.mostrar .modal-cuadro-gris {
+            transform: scale(1);
+        }
+
+        .modal-cerrar {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #ffffff;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.2s;
+        }
+
+        .modal-cerrar:hover {
+            color: #ffb3c6;
+        }
+
+        .margen-superior-editable {
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .margen-superior-editable h2, .margen-inferior-editable h2 {
+            text-align: center;
+            font-family: 'Collage', sans-serif;
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        .modal-cuerpo-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            padding-bottom: 20px;
+        }
+
+        .foto-creador-jpg {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #016394;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .bloque-nombre-autor {
+            margin: 0;
+            font-size: 1.6rem;
+            color: #6944fc;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .bloque-palabras-autor {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #dddddd;
+            max-width: 650px;
+            margin: 0;
+            text-align: justify;
+        }
+
+        .img-esquina {
+            position: absolute;
+            bottom: 0;
+            width: 110px;
+            height: auto;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .esquina-izq {
+            left: 0;
+            transform: rotate(330deg);
+        }
+
+        .esquina-der {
+            right: 0;
+            transform: scaleX(-1) rotate(330deg);
+        }
+
+        @media (max-width: 768px) {
+            .modal-cuadro-gris { width: 95%; height: 90%; }
+            .foto-creador-jpg { width: 130px; height: 130px; }
+            .bloque-palabras-autor { font-size: 1rem; }
+            .img-esquina { width: 70px; }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar-glass">
+        <div class="nav-logo">Proyecto Aula</div>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="Infografias.html">Infografias</a>
+            <a href="Videos.html">Videos</a>
+            <a href="Investigacion.html">Investigacion</a>
+            <a href="Grafica.html">Graficas</a>
+            <img src="Imagenes/BarraNavegacion/E=mc2.png" alt="Autor" id="btn-autor" style="width: 32px; height: 32px; cursor: pointer; object-fit: cover; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <a href="https://www.youtube.com/@canaloficialdelcecyt8narci780/videos" target="_blank" class="btn-youtube">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+    </nav>
+
+    <div class="pagina-contenedor">
+        <h2>Datos generales</h2>
+        <div id="contenedor-de-graficas" style="display: flex; flex-direction: column; align-items: center; width: 100%;"></div>
+    </div>
+
+    <div id="modal-autor" class="modal-overlay">
+        <div class="modal-cuadro-gris">
+            <span class="modal-cerrar">&times;</span>
+            <div class="margen-superior-editable">
+                <h2>-  . .- -- --- </h2>
+            </div>
+            <div class="modal-cuerpo-vertical">
+                <img src="Imagenes/BarraNavegacion/trafalgaricon.jpg" alt="Creador" class="foto-creador-jpg">
+                <div class="bloque-nombre-autor">Joel360957</div>
+                <p class="bloque-palabras-autor">Wanabana</p>
+            </div>
+            <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Izquierda" class="img-esquina esquina-izq">
+            <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Derecha" class="img-esquina esquina-der">
+            <div class="margen-inferior-editable">      
+                <h2>-.-. .- -- .. .-.. .-</h2>            
+            </div>
+        </div>
+    </div>
+
+<script>
+    const listaEncuestas = [
+        {
+            titulo: 'Cual es la edad de los encuestados?',
+            etiquetas: ['De 14 a 16 años','De 16 a 18 años','Mas de 18 años'],
+            valores: [206, 95, 6],
+        },
+        {
+            titulo: '¿Sientes que el uso de tus datos por parte de las IA vulnera tu privacidad?',
+            etiquetas: ['Totalmente, Muchas veces', 'Algunas veces', 'Pocas veces', 'Nunca'],
+            valores: [36, 30, 150, 68]
+        },
+        {
+            titulo: '¿En que semestre te encuentras?',
+            etiquetas: ['Segundo', 'Cuarto','Sexto'],
+            valores: [254, 40, 13]
+        },
+        {
+            titulo: '¿Cual es tu sexo?',
+            etiquetas: ['Masculino','Femenino','Trans','Prefiero no decirlo'],
+            valores: [163, 136, 4, 4]
+        },
+        {
+            titulo: '¿En que estatus te encuentras actualmente?',
+            etiquetas: ['Estudiante Regular','Estudiante Irregular'],
+            valores: [224, 83]
+        },
+        {
+            titulo: '¿Has recibido cursos sobre como usar las IA en el ambito educativo?',
+            etiquetas: ['Siempre','Frecuentemente','En ocasiones','Casi Nunca','Nunca'],
+            valores: [7,19,76,94,111]
+        },
+        {
+            titulo: '¿Desde hace cuanto tiempo usas IA para procesos de aprendizaje?',
+            etiquetas: ['De 1 a 3 meses','De 4 meses a 12 meses','De 1 a 3 años','Mas de 3 años','Nunca'],
+            valores: [33,123,123,25,3]
+        },
+         {
+            titulo: '¿Cual de estos tipos de IA usas mas?',
+            etiquetas: ['Generativa de Texto','Generativa de Imagen','De resolucion Matematica','No utilizo IA','Todas las anteriores'],
+            valores: [158,38,46,3,62]
+        },
+        {
+            titulo: '¿Cual consideras que es la funcion principal de la IA en tu proceso de Aprendizaje?',
+            etiquetas: ['Tutoria Personalizada','Elaboracion de treas y trabajos','Herramienta de busqueda','Generacion de proyectos e ideas','Todas las anteriores','Otras'],
+            valores: [113,50,78,7,52,7]
+        },
+        {
+            titulo: '¿En que actividad academica recurres mas al uso de la IA?',
+            etiquetas: ['Investigacion','Resolucion de ejercicios','Preparacion de exposiciones','Practica de idiomas','Elaboracion de trabajos escritos','Resolucion de examenes','Todas las anteriores','Otras'],
+            valores: [116,90,33,12,12,0,29,15]
+        },
+         {
+            titulo: '¿En que areas de conocimiento aplicas mas el uso de la IA?',
+            etiquetas: ['Fisico-Matematicas','Medico-Biologicas','Ciencias Sociales','Artes y Diseño','Otras'],
+            valores: [134,32,66,33,42]
+        },
+        {
+            titulo: '¿Que herramienta consideras que tiene un valor real en tu formacion academica?',
+            etiquetas: ['Aquellos que explican conceptos paso a paso','Las que corrigen gramatica','Las que ayudan a programar','Las que sirven para organizar tu agenda','Las que resuelven tareas y actividades','No se'],
+            valores: [213,32,28,27,8,8]
+        },
+        {
+            titulo: '¿Con que frecuencia usas IA en el semestre escolar?',
+            etiquetas: ['Siempre','Frecuentemente','Algunas veces','Casi nunca','Nunca'],
+            valores:[30,115,146,10,6]
+        },
+        {
+            titulo: '¿Qué sentimiento predomina al integrar la IA?',
+            etiquetas: [
+                'Alivio y reducción de estrés',
+                'Curiosidad por la tecnología',
+                'Inseguridad o miedo a no aprender',
+                'Frustración por malos resultados',
+                'No sé',
+                'Otros'
+            ],
+            valores: [141, 76, 59, 13, 13, 5]
+        },
+        {
+            titulo: '¿Cómo calificas tu nivel de dominio en IA?',
+            etiquetas: [
+                'Experto (Instrucciones complejas)',
+                'Intermedio (Herramientas básicas)',
+                'Principiante (Me cuesta trabajo)',
+                'Nulo (No sé usarla)'
+            ],
+            valores: [46, 215, 41, 5]
+        },
+        {
+            titulo: '¿Cuál es el beneficio más significativo de la IA?',
+            etiquetas: [
+                'Mejora en calidad y presentación',
+                'Mayor rapidez y menor esfuerzo',
+                'Explicaciones claras y sencillas',
+                'Evitar trabajo innecesario',
+                'Desarrollo de habilidades digitales',
+                'Todas las anteriores',
+                'Otras'
+            ],
+            valores: [91, 69, 100, 11, 4, 25, 7]
+        },
+        {
+            titulo: '¿Qué habilidades se afectan por el uso excesivo?',
+            etiquetas: [
+                'Comunicación oral y escrita',
+                'Razonamiento lógico y matemático',
+                'Análisis crítico y reflexivo',
+                'Trabajo en equipo y colaboración',
+                'Investigación y lectura',
+                'Pensamiento creativo y lateral',
+                'Todas las anteriores',
+                'Ninguna, se han fortalecido'
+            ],
+            valores: [40, 111, 38, 14, 34, 9, 35, 26]
+        },
+        {
+            titulo: '¿La IA modifica la interacción escolar?',
+            etiquetas: [
+                'Sí, paso más tiempo con la IA',
+                'Un poco, pero trato de participar',
+                'No, ya es parte de la rutina',
+                'No modifica, crea nuevas formas',
+                'Depende de cada persona',
+                'Más o menos',
+                'Solo la uso para tareas',
+                'Ninguna'
+            ],
+            valores: [48, 131, 98, 23, 2, 2, 2, 1]
+        },
+        {
+            titulo: '¿Qué tanto te preocupa la ética en la IA?',
+            etiquetas: [
+                'Mucho (Cito y protejo datos)',
+                'Regular (Es importante, no siempre lo aplico)',
+                'Poco (Me importa más el resultado)',
+                'Nada (No lo veo como problema)',
+                'Prefiero no responder'
+            ],
+            valores: [70, 138, 61, 23, 15]
+        },
+        {
+            titulo: '¿Has notado errores o sesgos en la IA?',
+            etiquetas: [
+                'Sí, reviso y noto sesgos seguido',
+                'Rara vez, confío plenamente',
+                'Nunca he verificado la información',
+                'Siempre'
+            ],
+            valores: [167, 105, 30, 5]
+        },
+        {
+            titulo: '¿Sientes que la IA vulnera tu privacidad?',
+            etiquetas: [
+                'Totalmente expuestos',
+                'Muchas veces',
+                'Algunas veces',
+                'Pocas veces',
+                'Nunca, son seguras'
+            ],
+            valores: [36, 30, 150, 68, 23]
+        },
+        {
+            titulo: '¿Conocías el costo ecológico de la IA?',
+            etiquetas: [
+                'Sí y me preocupa el impacto',
+                'Sí, pero no influye en mi uso',
+                'No tenía idea del daño ambiental',
+                'No lo considero relevante'
+            ],
+            valores: [137, 87, 77, 6]
+        },
+    ];
+    
+    const contenedorPadre = document.getElementById('contenedor-de-graficas');
+
+    listaEncuestas.forEach((encuesta, index) => {
+        const divGrafica = document.createElement('div');
+        divGrafica.className = 'contenedor-grafica';
+
+        const canvas = document.createElement('canvas');
+        canvas.id = `grafica-${index}`;
+
+        divGrafica.appendChild(canvas);
+        contenedorPadre.appendChild(divGrafica);
+
+        // DETECCIÓN DINÁMICA DEL MODO DE PANTALLA
+        const esModoOscuro = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const colorTexto = '#ffffff';
+
+        // AJUSTE DE BORDES: En modo claro usa gris oscuro (#2b2b2b) para contrastar con el fondo guinda
+        const colorBorde = esModoOscuro ? '#ffffff' : '#2b2b2b';
+
+        const totalEncuesta = encuesta.valores.reduce((a, b) => Number(a) + Number(b), 0);
+
+        // EVALUACIÓN DE PALETA INTERCALADA PERSONALIZADA O AUTOMÁTICA
+        let coloresFinales;
+        if (encuesta.colores && encuesta.colores.length > 0) {
+            coloresFinales = encuesta.etiquetas.map((_, i) => encuesta.colores[i % encuesta.colores.length]);
+        } else {
+            const paletaIntercalada = ['#F5F5DC','#F8F8FF','#F5F5F5','#800020','#6F1D1B','#4A1525'];
+            coloresFinales = encuesta.etiquetas.map((_, i) => paletaIntercalada[i % paletaIntercalada.length]);
+        }
+
+        new Chart(canvas.getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: encuesta.etiquetas,
+                datasets: [{
+                    label: 'Número de personas',
+                    data: encuesta.valores,
+                    backgroundColor: coloresFinales,
+                    borderWidth: 2.5,
+                    borderColor: colorBorde,     
+                    borderAlign: 'inner'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false, 
+                plugins: {
+                    legend: { 
+                        position: 'top',
+                        labels: { 
+                            color: colorTexto,
+                            boxWidth: 15,
+                            padding: 10 
+                        }
+                    },
+                    title: { 
+                        display: true, 
+                        text: encuesta.titulo,
+                        color: colorTexto,
+                        padding: { top: 10, bottom: 20 }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const valorActual = context.raw;
+                                const porcentaje = ((valorActual / totalEncuesta) * 100).toFixed(1);
+                                return ` ${context.label}: ${valorActual} personas (${porcentaje}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    // Control del modal de autor
+    const btnAutor = document.getElementById('btn-autor');
+    const modalAutor = document.getElementById('modal-autor');
+    const btnCerrar = document.querySelector('.modal-cerrar');
+
+    btnAutor.addEventListener('click', () => {
+        modalAutor.classList.add('mostrar');
+    });
+
+    btnCerrar.addEventListener('click', () => {
+        modalAutor.classList.remove('mostrar');
+    });
+
+    modalAutor.addEventListener('click', (e) => {
+        if (e.target === modalAutor) {
+            modalAutor.classList.remove('mostrar');
+        }
+    });
+</script>
+
+</body>
+</html>

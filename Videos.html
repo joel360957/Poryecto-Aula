@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tutoriales</title>  
+    <title>Videos</title>  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @font-face {
@@ -242,7 +242,7 @@
                 background: #333638;
             }
         }
-          /* --- ESTILOS DE LA INTERFAZ DE AUTOR --- */
+        /* --- ESTILOS DE LA INTERFAZ DE AUTOR --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -388,7 +388,7 @@
             <a href="Videos.html">Videos</a>
             <a href="Investigacion.html">Investigación</a>
             <a href="Grafica.html">Gráficas</a>
- <img src="Imagenes/BarraNavegacion/E=mc2.png" alt="Autor" id="btn-autor" style="width: 32px; height: 32px; cursor: pointer; object-fit: cover; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <img src="Imagenes/BarraNavegacion/E=mc2.png" alt="Autor" id="btn-autor" style="width: 32px; height: 32px; cursor: pointer; object-fit: cover; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
             <a href="https://www.youtube.com/@canaloficialdelcecyt8narci780/videos" target="_blank" class="btn-youtube">
                 <i class="fa-brands fa-youtube"></i>
             </a>
@@ -459,7 +459,7 @@
             <img src="imagenes/Videos/duo.jpg" alt="Video 9">
             <div class="capa-descripcion">
                 <h3>Cómo hacer que la IA no te dé siempre la razón</h3>
-                <p>En este video nuestros compañeros nos enseñarán a cómo configurar la IA para hacer que esta no siempre nos dé la razón a todo</p>
+                <p>En este video nuestros compañeros nos enseñarán cómo configurar la IA para hacer que esta no siempre nos dé la razón a todo</p>
             </div>
         </div>
     </div>
@@ -504,17 +504,18 @@
         </div>
     </div>
 
-    <H1>Uso Etico</H1>
-    <  <div class="tarjeta-video" data-video="QZTjxKLPzs0">
+    <h3>Uso Ético</h3>
+    <div class="galeria-videos">
+        <div class="tarjeta-video" data-video="QZTjxKLPzs0">
             <img src="imagenes/Videos/figura.jpg" alt="Video 7">
             <div class="capa-descripcion">
-                <h3>No sé qué tiene que ver con Trigonometría</h3>
-                <p>...d</p>
+                <h3>Uso Ético de la IA</h3>
+                <p>En este video hablaremos sobre los aspectos éticos del uso de la inteligencia artificial en el aula.</p>
             </div>
         </div>
     </div>
 
-     <div id="modal-autor" class="modal-overlay">
+    <div id="modal-autor" class="modal-overlay">
         <div class="modal-cuadro-gris">
             <span class="modal-cerrar">&times;</span>
             
@@ -526,7 +527,7 @@
                 <img src="Imagenes/BarraNavegacion/trafalgaricon.jpg" alt="Creador" class="foto-creador-jpg">
                 
                 <div class="bloque-nombre-autor">
-                    Creador de la pagina
+                    Creador de la página
                 </div>
                 
                 <p class="bloque-palabras-autor">
@@ -538,8 +539,11 @@
             <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Derecha" class="img-esquina esquina-der">
              
             <div class="margen-inferior-editable">      
-            <h2>-.-. .- -- .. .-.. .-</h2>            
-             </div>
+                <h2>-.-. .- -- .. .-.. .-</h2>            
+            </div>
+        </div>
+    </div>
+
     <script>
     const modal = document.getElementById('modalVideo');
     const iframe = document.getElementById('iframeYoutube');
@@ -576,23 +580,24 @@
             cerrarModal();
         }
     });
-     const btnAutor = document.getElementById('btn-autor');
-        const modalAutor = document.getElementById('modal-autor');
-        const btnCerrar2 = document.querySelector('.modal-cerrar');
 
-        btnAutor.addEventListener('click', () => {
-            modalAutor.classList.add('mostrar');
-        });
+    const btnAutor = document.getElementById('btn-autor');
+    const modalAutor = document.getElementById('modal-autor');
+    const btnCerrar2 = document.querySelector('.modal-cerrar');
 
-        btnCerrar2.addEventListener('click', () => {
+    btnAutor.addEventListener('click', () => {
+        modalAutor.classList.add('mostrar');
+    });
+
+    btnCerrar2.addEventListener('click', () => {
+        modalAutor.classList.remove('mostrar');
+    });
+
+    modalAutor.addEventListener('click', (e) => {
+        if (e.target === modalAutor) {
             modalAutor.classList.remove('mostrar');
-        });
-
-        modalAutor.addEventListener('click', (e) => {
-            if (e.target === modalAutor) {
-                modalAutor.classList.remove('mostrar');
-            }
-        });
+        }
+    });
     </script>
 </body>
 </html>

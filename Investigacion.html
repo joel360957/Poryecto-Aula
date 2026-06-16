@@ -306,14 +306,14 @@
             box-shadow: 0 0.5em 1.5em -0.5em rgba(66, 16, 33, 0.6);
         }
 
-        /* --- VENTANA MODAL --- */
+        /* --- VENTANA MODAL FIEL AL INDEX (ANCHO TOTAL Y SIN SCROLL) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.65); /* Opacidad solicitada */
+            background-color: rgba(0, 0, 0, 0.65);
             z-index: 1000;
             display: flex;
             justify-content: center;
@@ -324,18 +324,17 @@
         }
 
         .modal-cuadro-gris {
-            background-color: #2b2b2b; /* Cuadro gris */
-            width: 85%;
-            height: 85%;
-            max-width: 800px;
-            max-height: 700px;
+            background-color: #2b2b2b;
+            width: 75% !important;        /* Ajustado al porcentaje real de tus capturas */
+            max-width: 900px !important;  /* Le da la amplitud horizontal idéntica a la del index */
+            height: auto; 
             border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
             border: 2px solid #444444;
             position: relative;
             padding: 30px;
             box-sizing: border-box;
-            overflow: hidden;
+            overflow: hidden;             /* Mantiene las frutas cortadas limpiamente abajo sin generar scroll */
             transform: scale(0.9);
             transition: transform 0.4s ease;
         }
@@ -364,16 +363,14 @@
             color: #ffb3c6;
         }
 
-        /* Margen superior editable */
         .margen-superior-editable {
-            padding-bottom: 10px;
-            margin-bottom: 25px;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
             margin-top: 5px;
-            text-align: left;
+            text-align: center;
         }
 
-        .margen-superior-editable h2 {
-            text-align: center;
+        .margen-superior-editable h2, .margen-inferior-editable h2 {
             font-family: 'Collage', sans-serif;
             color: #ffffff;
             margin: 0;
@@ -381,36 +378,24 @@
             letter-spacing: 1px;
         }
 
-        .margen-inferior-editable h2 {
-            text-align: center;
-            font-family: 'Collage', sans-serif;
-            color: #ffffff;
-            margin: 0;
-            font-size: 1.8rem;
-            letter-spacing: 1px;
-        }
-
-        /* Cuerpo en disposición vertical */
         .modal-cuerpo-vertical {
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centra la imagen y los textos */
+            align-items: center;
             text-align: center;
-            gap: 20px;
-            padding-bottom: 20px; /* Espacio para que no tape los PNG inferiores */
+            gap: 12px;
+            padding-bottom: 45px; 
         }
 
-        /* Foto JPG arriba del texto */
         .foto-creador-jpg {
-            width: 160px;
-            height: 160px;
+            width: 150px;
+            height: 150px;
             object-fit: cover;
             border-radius: 12px;
             border: 3px solid #016394;
             box-shadow: 0 5px 15px rgba(0,0,0,0.4);
         }
 
-        /* Bloque de textos */
         .bloque-nombre-autor {
             margin: 0;
             font-size: 1.6rem;
@@ -421,17 +406,13 @@
 
         .bloque-palabras-autor {
             font-size: 1.1rem;
-            line-height: 1.6;
             color: #dddddd;
-            max-width: 650px;
             margin: 0;
-            text-align: justify; /* Justificado para verse más limpio */
         }
 
-        /* PNGs en las esquinas inferiores fijas */
         .img-esquina {
             position: absolute;
-            bottom: 0;
+            bottom: -15px; 
             width: 110px;
             height: auto;
             pointer-events: none;
@@ -439,17 +420,20 @@
         }
 
         .esquina-izq {
-    left: 0;
-    /* Inclina la primera imagen 120 grados */
-    transform: rotate(330deg);
-}
+            left: -10px;
+            transform: rotate(330deg);
+        }
 
         .esquina-der {
-    right: 0;
-    /* scaleX(-1) la voltea horizontalmente (efecto espejo) */
-    /* rotate(45deg) le da la inclinación de 45 grados */
-    transform: scaleX(-1) rotate(330deg);
-}
+            right: -10px;
+            transform: scaleX(-1) rotate(330deg);
+        }
+
+        .margen-inferior-editable {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
 
         @media (max-width: 768px) {
             .fila-contenido, .fila-invertida {
@@ -466,18 +450,15 @@
                 padding: 50px 20px;
             }
             .modal-cuadro-gris {
-                width: 95%;
-                height: 90%;
+                width: 95% !important;
+                padding: 20px;
             }
             .foto-creador-jpg {
-                width: 130px;
-                height: 130px;
-            }
-            .bloque-palabras-autor {
-                font-size: 1rem;
+                width: 120px;
+                height: 120px;
             }
             .img-esquina {
-                width: 70px;
+                width: 80px;
             }
         }
     </style>
@@ -514,7 +495,7 @@
                     <p>En el transcurso de los últimos años, la Inteligencia Artificial ha dejado de ser un conceptuado abstracto para transformarse en un pilar fundamental de la infraestructura digital global. En el entorno educativo mexicano, esta transición ha modificado drásticamente la forma en que las instituciones gestionan el conocimiento. Estudiantes, docentes y directivos interactúan diariamente con algoritmos avanzados para optimizar la organización del aprendizaje, resolver problemáticas complexes de manera inmediata y romper barreras tradicionales de acceso a la información.</p>
                     
                     <h3>Génesis y Evolución Conceptual</h3>
-                    <p>Las bases teóricas de la Inteligencia Artificial se remontan a 1950, cuando el matemático británico Alan Turing formuló la célebre interrogante sobre la capacidad de pensamiento de las máquinas, diseñando metodologías primigenias para evaluar la autonomía computacional. Hoy en día, un sistema se define formalmente como dotado de IA cuando posee la facultad intrínseca de resolver problemas abstractos de forma independiente y eficiente. Esta eficiencia técnica está directamente ligada a dos factores críticos: el nivel de autonomía operativa que posee el software y la complejidad algorítmica de la problemática que se pretende resolver.</p>
+                    <p>Las bases teóricas de la Inteligencia Artificial se remontan a 1950, cuando el matemático británico Alan Turing formuló la célebre interrogante sobre la capacidad de pensamiento de las máquinas, diseñando metodologías primigenias para evaluar la autonomía computacional. Hoy en día, un software se define formalmente como dotado de IA cuando posee la facultad intrínseca de resolver problemas abstractos de forma independiente y eficiente. Esta eficiencia técnica está directamente ligada a dos factores críticos: el nivel de autonomía operativa que posee el software y la complejidad algorítmica de la problemática que se pretende resolver.</p>
                     
                     <h3>Taxonomía y Modelos de Desarrollo Tecnológico</h3>
                     <ul>
@@ -631,19 +612,16 @@
         </div>
     </section>
 
+    <!-- VENTANA MODAL ORIGINAL RESTAURADA CON ANCHO CORREGIDO -->
     <div id="modal-autor" class="modal-overlay">
         <div class="modal-cuadro-gris">
             <span class="modal-cerrar">&times;</span>
-            
-            <div class="margen-superior-editable">
-                <h2>-  . .- -- --- </h2>
-            </div>
             
             <div class="modal-cuerpo-vertical">
                 <img src="Imagenes/BarraNavegacion/trafalgaricon.jpg" alt="Creador" class="foto-creador-jpg">
                 
                 <div class="bloque-nombre-autor">
-                    Creador de la Pagina
+                    Creador de la página
                 </div>
                 
                 <p class="bloque-palabras-autor">
@@ -654,9 +632,7 @@
             <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Izquierda" class="img-esquina esquina-izq">
             <img src="Imagenes/BarraNavegacion/opeopenomi.png" alt="Decoración Derecha" class="img-esquina esquina-der">
              
-            <div class="margen-inferior-editable">      
-            <h2>-.-. .- -- .. .-.. .-</h2>            
-             </div>
+            
         </div>
     </div>
 
